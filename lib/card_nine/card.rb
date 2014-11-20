@@ -1,11 +1,18 @@
 require 'virtus'
-require 'card_nine/face'
 module CardNine
-  class Card
-    include Virtus.model
+  # this is a class meant to be included in card object and constitutes the
+  #   api for what it means to be a Card
+  module Card
 
+    include Virtus.module
     attribute :name, String
-    attribute :front_face, Face
+    attribute :id, String
+
+  end
+
+  class PlayingCard
+    include Card
+
   end
 end
 

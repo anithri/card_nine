@@ -1,15 +1,18 @@
 require 'rspec'
 require 'card_nine/card'
-require 'card_nine/face'
 
 describe CardNine::Card do
-  let(:name) { "A Card" }
-  let(:front_face) { CardNine::Face.new(name: "Card")}
-  let(:args) { { name: name, front_face: {name: name} } }
+  before :all do
+    class BlankCard
+      include CardNine::Card
+    end
+  end
+  let(:name) { 'A Card' }
+  let(:id) { 'A' }
+  let(:args) { { name: name, id: id } }
 
-  subject { described_class.new(args) }
+  subject { BlankCard.new(args) }
 
-  it { is_expected.to respond_to :name, :front_face }
-  it { expect(subject.name).to eq name }
-  it { expect(subject.front_face).to be_a CardNine::Face }
+  it { is_expected.to respond_to :name, :id }
+  it { is_expected.to have_attributes(name: 'A Card', id: 'A') }
 end

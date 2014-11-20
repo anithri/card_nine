@@ -1,5 +1,4 @@
 require 'virtus'
-require 'card_nine/coerce/randomable'
 require 'card_nine/card'
 module CardNine
   class Deck
@@ -8,10 +7,10 @@ module CardNine
     # @!attribute [rw] cards
     #   @return [Array<Card>]  all of the cards in the deck, regardless of their
     #     location
-    attribute :cards, Array[Card], default: ->(*args){[]}
+    attribute :cards, Array[Cards::Playing], default: ->(*args){[]}
     # @!attribute [rw] rng
     #   @return [Random, #rand]
-    attribute :rng, Coerce::Randomable, default: ->(*args){Random.new}
+    attribute :rng, Random, default: ->(*args){Random.new}
 
     def pick_card(rng = Random.new)
       cards.sample(random: rng)
