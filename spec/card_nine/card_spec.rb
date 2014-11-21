@@ -15,4 +15,6 @@ describe CardNine::Card do
 
   it { is_expected.to respond_to :name, :id }
   it { is_expected.to have_attributes(name: 'A Card', id: 'A') }
+
+
 end

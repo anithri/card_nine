@@ -28,4 +28,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'guard-bundler', '~> 2.0.0'
   spec.add_development_dependency 'version', '~> 1.0.0'
   spec.add_development_dependency 'fuubar', '~> 2.0.0'
+  spec.add_development_dependency 'pry'
 end

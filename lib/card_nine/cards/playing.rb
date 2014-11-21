@@ -8,6 +8,7 @@ module CardNine
       attribute :rank, String
       attribute :name, String, default: ->(p, c) { "#{p.rank} of #{p.suit}" }
       attribute :id, String
+
     end
   end
 end
