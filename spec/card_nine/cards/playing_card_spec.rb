@@ -17,7 +17,7 @@ describe CardNine::Cards::PlayingCard do
   describe 'sorting' do
     let(:name_h) { 'King of Spades' }
     let(:suit_h) { 'Spades' }
-    let(:rank_h) { 'K' }
+    let(:rank_h) { 'King' }
     let(:id_h) { 'KS' }
     let(:args_h) { { id: id_h, name: name_h, suit: suit_h, rank: rank_h } }
     let(:higher) { described_class.new(args_h) }
@@ -44,5 +44,13 @@ describe CardNine::Cards::PlayingCard do
     it { expect(subject < same).to be_falsey }
     it { expect(subject > same).to be_falsey }
     it { expect(subject == same).to be_truthy }
+  end
+
+  describe '#deck' do
+    subject { described_class.deck() }
+    it { is_expected.to be_a CardNine::Deck }
+    it { expect(subject.cards.length).to eq 52 }
+    it { expect(subject.cards).to all(be_a CardNine::Card) }
+    it { expect(subject.cards.map(&:id).uniq.length).to eq 52 }
   end
 end
