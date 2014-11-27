@@ -8,5 +8,4 @@ describe CardNine::Cards::SimpleCard do
   it { is_expected.to be_a described_class }
   it { expect(subject.id).to eq :batman }
   it { expect(subject.name).to eq 'Batman' }
-
 end
