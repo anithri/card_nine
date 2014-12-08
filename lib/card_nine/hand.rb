@@ -11,13 +11,13 @@ module CardNine
 
     # @!attribute [rw] players
     #   @return [Array]
-    attribute :players, Array, default: ->(*a) { [] }
+    attribute :players, Array, default: []
 
     # @!attribute [rw] table
     #   @return [CardNine::Table]
     attribute :table, CardNine::Table, default: :initialize_table
 
-    attribute :stages, Hash, default: ->(*a) { {} }
+    attribute :stages, Hash, default: {}
 
     # create a new hand, yield to a setup block if given
     def self.start(args = nil)

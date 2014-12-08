@@ -1,7 +1,7 @@
 # CardNine
 [![Build Status](https://travis-ci.org/anithri/card_nine.svg?branch=master)](https://travis-ci.org/anithri/card_nine)
 [![PullReview stats](https://www.pullreview.com/github/anithri/card_nine/badges/master.svg?)](https://www.pullreview.com/github/anithri/card_nine/reviews/master)
-[![Dependency Status](https://gemnasium.com/anithri/paradise.svg)](https://gemnasium.com/anithri/paradise)
+[![Dependency Status](https://gemnasium.com/anithri/card_nine.svg)](https://gemnasium.com/anithri/card_nine)
 
 A Small set of classes to help model decks of cards for board games.  Cards,
 Decks and Deals to help you make your games.

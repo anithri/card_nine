@@ -31,7 +31,6 @@ describe CardNine::Hand do
   end
 
   describe '.deal_stage(stage_name = nil, &blk)' do
-
     context 'with only block' do
       subject do
         h = described_class.start(players: players, deck: deck, table: table, stages: stages)
@@ -41,7 +40,6 @@ describe CardNine::Hand do
         h
       end
       it { expect(subject.at(:discards).length).to eq 3 }
-
     end
 
     context 'with only stage' do
@@ -65,11 +63,6 @@ describe CardNine::Hand do
       it { expect(subject.at('Robin').length).to eq 5 }
       it { expect(subject.at(:discards).length).to eq 6 }
       it { expect(subject.at(:shoe).length).to eq 31 }
-
-
     end
-
   end
-
-
 end

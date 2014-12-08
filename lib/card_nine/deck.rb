@@ -7,7 +7,7 @@ module CardNine
 
     # @!attribute [rw] cards
     #   @return [Array<Card>] all cards in the deck
-    attribute :cards, Array[Card], default: ->(*a) { [] }
+    attribute :cards, Array[Card], default: []
 
     # @!attribute [rw] rng
     #   @return [Random,#rand]
