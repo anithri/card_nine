@@ -7,7 +7,6 @@ module CardNine
   require 'card_nine/card'
   require 'card_nine/deck'
   require 'card_nine/dealer'
-  require 'card_nine/table'
   require 'card_nine/hand'
 
 end

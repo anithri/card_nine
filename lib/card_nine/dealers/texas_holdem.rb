@@ -38,7 +38,7 @@ module CardNine
       # @return [CardNine::Hand]
       def new_hand
         players.rotate!
-        Hand.start(players: players, deck: deck, stages: STAGES)
+        #Hand.start(players: players, deck: deck, stages: STAGES)
       end
 
     end
