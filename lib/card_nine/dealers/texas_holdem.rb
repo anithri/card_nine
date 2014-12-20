@@ -1,4 +1,7 @@
 require 'card_nine/cards/playing_card'
+require 'card_nine/dealer'
+require 'card_nine/table'
+
 module CardNine
   module Dealers
     # implements a CardNine::Dealer for the game of Texas Holdem.  This is only
@@ -18,29 +21,21 @@ module CardNine
     #   wagering(:round, hand)
     # end
     # wager(:resolve, hand)
-    class TexasHoldem
-
-      attr_accessor :players, :deck
+    class TexasHoldem < CardNine::Dealer
 
       STAGES = {
-          deal_hole_cards: ->(h) { h.deal_players(2) },
-          flop:            ->(h) { h.discard; h.deal(3, to: :community) },
-          turn:            ->(h) { h.discard; h.deal(to: :community) },
-          river:           ->(h) { h.discard; h.deal(to: :community) }
+          deal_hole_cards: ->(t) { t.deal_players(2) },
+          flop:            ->(t) { t.discard; t.deal(3, to: :community) },
+          turn:            ->(t) { t.discard; t.deal(to: :community) },
+          river:           ->(t) { t.discard; t.deal(to: :community) },
+          fold:            ->(t, p) { t.remove_player(p) }
       }
 
-      def initialize(players:, deck: CardNine::Cards::PlayingCard.deck)
-        @players = players
-        @deck    = deck
-      end
-
-      # generate a new hand from this dealer
-      # @return [CardNine::Hand]
-      def new_hand
-        players.rotate!
-        #Hand.start(players: players, deck: deck, stages: STAGES)
+      def initialize
+        super CardNine::Cards::PlayingCard.deck, [:community], STAGES
       end
 
     end
+
   end
 end
