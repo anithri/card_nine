@@ -1,4 +1,5 @@
 require 'card_nine/card'
+require 'card_nine/deck'
 
 module CardNine
   module Cards
@@ -9,7 +10,7 @@ module CardNine
       # @!method initialize(args = nil)
       #   will set the instance vars using the keys of args as a attribute name
       #   @param [Hash, Nil] args
-      include Card
+      include CardNine::Card
 
       # ALL Suits of cards
       SUITS = %w|Clubs Hearts Diamonds Spades|.freeze

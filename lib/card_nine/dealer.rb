@@ -10,9 +10,8 @@ module CardNine
     end
 
     def deal(players)
-      Table.new(deck.shuffle, players, locations, stages)
+      CardNine::Table.new(deck.shuffle, players, locations, stages)
     end
-
 
   end
 end

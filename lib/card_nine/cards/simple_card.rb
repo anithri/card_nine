@@ -5,7 +5,7 @@ module CardNine
       # @!method initialize(args = nil)
       #   will set the instance vars using the keys of args as a attribute name
       #   @param [Hash, Nil] args
-      include Card
+      include CardNine::Card
     end
   end
 end
