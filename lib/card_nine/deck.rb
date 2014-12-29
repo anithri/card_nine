@@ -3,6 +3,8 @@ module CardNine
   class Deck
     include Virtus.model
 
+    # @!attribute [rw] cards
+    #   @return [Array<CardNine::Card>]
     attribute :cards, Array, default: []
 
     # @!attribute [rw] rng

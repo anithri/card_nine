@@ -9,19 +9,19 @@ describe CardNine::Table do
   let(:players) { %w{Tim Dick Jason} }
   let(:locations) { [:batcave] }
   let(:expected_locs) { [:shoe, :discards] + locations + players }
-  let(:expected_attributes) {
+  let(:expected_attributes) do
     {
         shoe:      shoe,
         players:   players,
         locations: locations,
         stages:    {}
     }
-  }
+  end
   subject { CardNine::Table.new(shoe, players, locations) }
 
   it { is_expected.to be_a CardNine::Table }
   it { is_expected.to have_attributes expected_attributes }
-  it { expect(subject.locs).to include *expected_locs }
+  it { expect(subject.locs).to include(*expected_locs) }
   it { expect(subject.discards).to eq [] }
   it { expect(subject.cards_for(:batcave)).to eq [] }
   it { expect(subject.cards_for('Tim')).to eq [] }

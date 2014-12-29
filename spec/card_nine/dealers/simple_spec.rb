@@ -8,13 +8,13 @@ describe CardNine::Dealers::Simple do
 
   let(:players) { %w{Tim Dick Jason} }
   let(:locations) { [:batcave] }
-  let(:expected_attributes) {
+  let(:expected_attributes) do
     {
         deck:      deck,
         locations: locations
     }
-  }
+  end
   subject { CardNine::Dealers::Simple.new(deck, locations) }
-
-
+  it { is_expected.to be_a described_class }
+  it { is_expected.to be_a_kind_of CardNine::Dealer }
 end

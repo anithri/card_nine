@@ -3,6 +3,7 @@ require 'card_nine/deck'
 
 module CardNine
   module Cards
+    # A class that represents the typical playing card from a 52 card deck.
     class PlayingCard
       # @note implements comparable
       include Comparable

@@ -5,7 +5,6 @@ require 'card_nine/dealers/simple'
 describe CardNine do
 
   describe 'texas holdem dealer' do
-
   end
 
   describe 'Simple dealer' do
@@ -16,6 +15,4 @@ describe CardNine do
 
     it { is_expected.to be_a CardNine::Dealers::Simple }
   end
-
-
 end

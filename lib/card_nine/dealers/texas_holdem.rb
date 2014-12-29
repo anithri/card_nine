@@ -23,6 +23,8 @@ module CardNine
     # wager(:resolve, hand)
     class TexasHoldem < CardNine::Dealer
 
+      # A hash of stages
+      # @return [Hash<Symbol => Proc>]
       STAGES = {
           deal_hole_cards: ->(t) { t.deal_players(2) },
           flop:            ->(t) { t.discard; t.deal(3, to: :community) },
@@ -31,11 +33,10 @@ module CardNine
           fold:            ->(t, p) { t.remove_player(p) }
       }
 
+      # create a new dealer using a PlayingCard Deck
       def initialize
         super CardNine::Cards::PlayingCard.deck, [:community], STAGES
       end
-
     end
-
   end
 end

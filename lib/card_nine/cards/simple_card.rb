@@ -1,3 +1,4 @@
+require 'card_nine/card'
 module CardNine
   module Cards
     # The simplest card possible.  A Nothing added class with Card included
