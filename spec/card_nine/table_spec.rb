@@ -77,6 +77,36 @@ describe CardNine::Table do
       it { expect(subject.cards_for(:batplane)).to eq ['Robin', 'Batman'] }
     end
   end
+
+  describe 'move_card' do
+    subject do
+      s = described_class.new(shoe, locations)
+      s.move_card('Batman', from: :shoe, to: :batplane)
+      s
+    end
+    it { expect(subject.cards_for(:batplane)).to eq ['Batman'] }
+  end
+
+  describe 'discard_card' do
+    subject do
+      s = described_class.new(shoe, locations)
+      s.move_card('Batman', from: :shoe, to: :batplane)
+      s.discard_card('Batman', from: :batplane)
+      s
+    end
+    it { expect(subject.discards).to eq ['Batman'] }
+  end
+
+  describe 'discard_location' do
+    subject do
+      s = described_class.new(shoe, locations)
+      s.move_card('Batman', from: :shoe, to: :batplane)
+      s.discard_location(:batplane)
+      s
+    end
+    it { expect(subject.discards).to eq ['Batman'] }
+    it { expect(subject.locations).not_to include :batcave  }
+  end
 end
 
 

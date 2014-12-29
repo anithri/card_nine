@@ -3,10 +3,10 @@ module CardNine
     attr :shoe, :discards, :stages
 
     def initialize(shoe, locations, stages: {})
-      @shoe     = shoe
-      @discards = []
+      @shoe      = shoe
+      @discards  = []
       @locations = locations
-      @stages   = stages
+      @stages    = stages
       register_location(:shoe, shoe)
       register_location(:discards, @discards)
     end
@@ -33,10 +33,22 @@ module CardNine
       count.times { match_locations(&blk).each { |p| deal(to: p) } }
     end
 
+    def move_card(card, from:, to:)
+      cards_for(to).push(cards_for(from).delete(card))
+    end
+
+    def discard_card(card, from: )
+      move_card(card, from: from, to: :discards)
+    end
+
+    def discard_location(location, to: :discards)
+      deal(cards_for(location).length, from: location, to: to)
+      @locations.delete(location)
+    end
+
+    private
     def match_locations(&blk)
       locations.select { |e| blk.call(e, cards_for(e)) }
     end
-
-
   end
 end
