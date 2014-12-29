@@ -11,7 +11,7 @@ describe CardNine do
     let(:deck) { CardNine::Deck.new(cards: %w{Batman Nightwing Batgirl Robin}) }
 
     let(:players) { %w{Tim Dick Jason} }
-    subject { CardNine::Dealers::Simple.new(deck, [:batcave]) }
+    subject { CardNine::Dealers::Simple.new(deck, { batcave: [] }) }
 
     it { is_expected.to be_a CardNine::Dealers::Simple }
   end

@@ -22,7 +22,8 @@ module CardNine
     # @param [Array<String,Object>] players
     # @return [CardNine::Table] using deck, players, locations and stages
     def deal(players)
-      CardNine::Table.new(deck.shuffle, players, locations, stages)
+      locs = (locations + players).reduce({}) { |h, e| h[e] = []; h }
+      CardNine::Table.new(deck.shuffle, locs, stages)
     end
   end
 end

@@ -2,78 +2,81 @@ require 'rspec'
 require 'card_nine/table'
 
 describe CardNine::Table do
-  let(:card_names) { %w{Batman Nightwing Batgirl Robin} }
-  let(:cards) { card_names.map { |c| CardNine::Cards::SimpleCard.new(c) } }
+  let(:card_names) { %w{Zorro Batman Batgirl Robin} }
   let(:shoe) { CardNine::Deck.new(cards: card_names).cards }
-
-  let(:players) { %w{Tim Dick Jason} }
-  let(:locations) { [:batcave] }
-  let(:expected_locs) { [:shoe, :discards] + locations + players }
-  let(:expected_attributes) do
-    {
-        shoe:      shoe,
-        players:   players,
-        locations: locations,
-        stages:    {}
-    }
+  let(:locations) do
+    h            = {}
+    h[:batplane] = []
+    h
   end
-  subject { CardNine::Table.new(shoe, players, locations) }
+  subject { described_class.new(shoe, locations) }
 
-  it { is_expected.to be_a CardNine::Table }
-  it { is_expected.to have_attributes expected_attributes }
-  it { expect(subject.locs).to include(*expected_locs) }
-  it { expect(subject.discards).to eq [] }
-  it { expect(subject.cards_for(:batcave)).to eq [] }
-  it { expect(subject.cards_for('Tim')).to eq [] }
+  it { is_expected.to be_a described_class }
+  it { expect(subject.locations).to eq [:batplane, :shoe, :discards] }
 
-  describe '.deal(count = 1, to:)' do
-    let(:table) { CardNine::Table.new(shoe, players, locations) }
-    subject { table.deal(to: :batcave); table }
-    it { expect(subject.cards_for(:batcave)).to eq ['Robin'] }
-    it { expect(subject.shoe).to eq %w{Batman Nightwing Batgirl } }
-    context 'with a count of 2' do
-      subject { table.deal(2, to: :batcave); table }
-      it { expect(subject.cards_for(:batcave)).to eq ['Batgirl', 'Robin'] }
-      it { expect(subject.shoe).to eq ['Batman', 'Nightwing'] }
+  describe 'easy stuff' do
+    it 'returns the container for a given location' do
+      subject.register_location(:tim, :drake_manor)
+      expect(subject.cards_for(:tim)).to eq :drake_manor
     end
-    context 'with a from location' do
+    it 'registers locations' do
+      subject.register_location(:tim, [:drake_manor])
+      expect(subject.cards_for(:tim)).to eq [:drake_manor]
+    end
+    it 'reports locations' do
+      subject.register_location(:tim, [:drake_manor])
+      expect(subject.locations).to eq [:batplane, :shoe, :discards, :tim]
+    end
+  end
+
+  describe '.deal(count = 1, from: :shoe, to:' do
+    context 'with default count' do
       subject do
-        table.deal(2, to: :batcave)
-        table.deal(from: :batcave, to: 'Tim')
-        table
+        s = described_class.new(shoe, locations)
+        s.deal(to: :batplane)
+        s
       end
-      it { expect(subject.cards_for(:batcave)).to eq ['Batgirl'] }
-      it { expect(subject.cards_for('Tim')).to eq ['Robin'] }
+      it { expect(subject.shoe.count).to eq 3 }
+      it { expect(subject.cards_for(:batplane).first).to eq 'Robin' }
+    end
+    context 'with given count' do
+      subject do
+        s = described_class.new(shoe, locations)
+        s.deal(2, to: :batplane)
+        s
+      end
+      it { expect(subject.shoe.count).to eq 2 }
+      it { expect(subject.cards_for(:batplane).first).to eq 'Batgirl' }
+      it { expect(subject.cards_for(:batplane).last).to eq 'Robin' }
     end
   end
+  describe '.deal_each_matching(count = 1){|location, container|}' do
+    context 'with default count' do
+      subject do
+        locations['Alfred'] = []
+        locations['James']  = []
+        s                   = described_class.new(shoe, locations)
+        s.deal_each_matching { |location, container| location.is_a? String }
+        s
+      end
+      it { expect(subject.shoe.count).to eq 2 }
+      it { expect(subject.cards_for('Alfred').first).to eq 'Robin' }
+      it { expect(subject.cards_for('James').first).to eq 'Batgirl' }
+      it { expect(subject.discards).to eq [] }
+      it { expect(subject.cards_for(:batplane)).to eq [] }
 
-  describe '.deal_each_player(grp, count)' do
-    let(:table) { CardNine::Table.new(shoe, players, locations) }
-    subject do
-      table.deal_each_player(1)
-      table
     end
-    it { expect(subject.shoe).to eq ['Batman'] }
-    it { expect(subject.cards_for('Tim')).to eq ['Robin'] }
-
-    context 'with a count over 1' do
-      let(:card_names) { %w{Batman Nightwing Batgirl Robin Spoiler Huntress} }
-      subject { table.deal_each_player(2); table }
-      it { expect(subject.shoe).to eq [] }
-      it { expect(subject.cards_for('Dick')).to eq ['Spoiler', 'Nightwing'] }
+    context 'with given count' do
+      subject do
+        s = described_class.new(shoe, locations)
+        s.deal_each_matching(2) { |l, c| l.is_a?(Symbol) && l != :shoe }
+        s
+      end
+      it { expect(subject.shoe.count).to eq 0 }
+      it { expect(subject.cards_for(:discards)).to eq ['Batgirl', 'Zorro'] }
+      it { expect(subject.cards_for(:batplane)).to eq ['Robin', 'Batman'] }
     end
   end
-
-  describe '.deal_stage(stage_name)' do
-    it 'should yield to the named proc' do
-      canary = double('canary')
-      expect(canary).to receive(:call)
-      stages = { deal_1: canary }
-      table  = CardNine::Table.new(shoe, players, locations, stages)
-      table.deal_stage(:deal_1)
-    end
-
-  end
-
-
 end
+
+
